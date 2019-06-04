@@ -1,0 +1,80 @@
+<html>
+	<head>
+	
+	</head>
+	<body>
+		<h2>Ввод комбинации</h2>
+		<form>
+		Исходное положение<br>
+		<input type="text" id="comb"><br>
+		<button type="button" onclick="result()">Ok</button>
+		</form>
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+		<script type="text/javascript">
+		
+		//функция вычисления возможных ходов фигуры
+		function result(){
+			var let = ["A","B","C","D","E","F","G","H"];
+			var entcomb = document.getElementById("comb").value.toUpperCase();
+			var count = -1;
+			var str = '';
+			for(i = 0;i < let.length; i++){
+				if(entcomb[0]==let[i]){
+					count = i;
+					break;
+				}
+			}
+
+			//проверка на корректность ввода комбинации
+			//если введенные значения находятся за пределами
+			//допустимых значений, сообщение о некорректности ввода
+			if((count == -1)||(isNaN(entcomb[1]))){
+				swal("Ошибка","Некорретная комбинация","error");
+				return;
+			}
+			
+			if((parseInt(entcomb[1])<1)||(parseInt(entcomb[1])>8)){
+				swal("Ошибка","Некорретная комбинация","error");
+				return;
+			}
+			
+			
+			//вычисление допустимых ходов фигуры и добавление их в строку
+			//str, которая будет выведена
+			if((count+2)<=7){
+				if((parseInt(entcomb[1])+1)<=8){
+					str = str+let[count+2]+(parseInt(entcomb[1])+1+' ');
+				}
+				if((parseInt(entcomb[1])-1)>=1){
+					str = str+let[count+2]+(parseInt(entcomb[1])-1+' ');
+				}
+			}
+			if((count-2)>=0){
+				if((parseInt(entcomb[1])+1)<=8){
+					str = str+let[count-2]+(parseInt(entcomb[1])+1+' ');
+				}
+				if((parseInt(entcomb[1])-1)>=1){
+					str = str+let[count-2]+(parseInt(entcomb[1])-1+' ');
+				}
+			}
+			if((parseInt(entcomb[1])+2)<=8){
+				if((count+1)<=7){
+					str = str+let[count+1]+(parseInt(entcomb[1])+2+' ');
+				}
+				if((count-1)>=0){
+					str = str+let[count-1]+(parseInt(entcomb[1])+2+' ');
+				}
+			}
+			if((parseInt(entcomb[1])-2)>=1){
+				if((count+1)<=7){
+					str = str+let[count+1]+(parseInt(entcomb[1])-2+' ');
+				}
+				if((count-1)>=0){
+					str = str+let[count-1]+(parseInt(entcomb[1])-2+' ');
+				}
+			}
+			swal("Возможные варианты хода",str,"success");
+		}
+		</script>
+	</body>
+</html>
